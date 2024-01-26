@@ -1,0 +1,16 @@
+Create a Expectation parent class to provide a shared interface
+    Allows for ease of use via inheritance/polymorphism via constructor and run method
+    Allows for adding more expectations with relative ease as would only need to create new child class
+
+Program flow:
+    Read and validate expectations yml (Assuming existence)
+    Create an array of n number of child expectation objects
+        Can be multi-threaded to improve performance
+    Read a CHUNK of input csv (Assuming existence)
+        Chunk-size a variable hardcoded in a config
+        'Necessary' in the case of large file sizes
+    Each expectation object in the array runs on the chunk of csv data and stores results within itself
+        Can be mutli-threaded for performance
+    Repeat Chunk read and expectation objects run on each chunk until EOF (End of file)
+    Iterate through child expectation objects to create a results.txt
+    Write results.txt (Assuming valid write permissions)
