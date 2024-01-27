@@ -18,6 +18,10 @@ DEFAULT_OUTPUT_FILE = "results.txt"
 
 
 def parse_config(config_path):
+    """
+    :param config_path: Path to the file specifying the configuration of the expectations in a suite
+    :return: Returns an array of expectation objects based on the config file
+    """
     try:
         with open(config_path, 'r') as f:
             config = json.load(f)
@@ -31,44 +35,58 @@ def parse_config(config_path):
     for expect_name, details in config["SUITE"]["EXPECTATIONS"].items():
         expectations.append(TYPE_2_EXPECT_MAP[details["type"]]
                             (expect_name, details['params']['FLD_NAME'], details['params']))
-        print(f"SUCCESS: Generated {expect_name} expectation as a part of {GreatestExpectations.suite_name} suite")
-    print(f"SUCCESS: Generated {len(expectations)} expectations as a part of {GreatestExpectations.suite_name} suite")
+        print(f"Generated {expect_name} expectation as a part of {GreatestExpectations.suite_name} suite")
+    print(f"Generated {len(expectations)} expectations as a part of {GreatestExpectations.suite_name} suite")
     return expectations
 
 
-def read_csv(input_file, delimiter, expectations):
+def validate_csv(input_file_path, expectation_suite, delimiter):
+    """
+    :param input_file_path: Path to the csv file which needs validation
+    :param expectation_suite: Array of expectation objects to validate the csv
+    :param delimiter: Delimiter used in the input file
+    :return: None - updates tracks errors in the expectation suite by reference
+    """
     try:
-        with open(input_file, 'r', newline='') as csv_file:
-            # Create a CSV reader object
+        with open(input_file_path, 'r', newline='') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=delimiter)
+
+            # Updating the expectation_suite after their init is messy
+            # I would refactor to generate expectations here given more time
+
+            # Processing updating each expectation with its column number
             header = next(csv_reader)
-            for expectation in expectations:
+            for expectation in expectation_suite:
                 expectation.field_location = header.index(expectation.field_name)
-            # Iterate over each row in the CSV file
+
+            # Reading each line and then letting each expectation read it
+            # Should eliminate memory impact since only a single line of the file is checked at a time
             for line_number, row in enumerate(csv_reader, 1):
-                # print(line_number, row)
-                for expectation in expectations:
+                for expectation in expectation_suite:
+                    # Note: As a part of validate, each expectation tracks its own errors
+                    # I could log/write each error immediately to output but it'll make less organized logs
                     expectation.validate(line_number, row)
     except FileNotFoundError:
-        print(f"File '{input_file}' not found.")
+        print(f"ERROR: File '{input_file_path}' not found.")
         raise
-    print(f"SUCCESS: Read all the records of {input_file}")
+    print(f"SUCCESS: Read all the records of {input_file_path}")
 
 
-def output_data(expects, out_file):
+def output_data(expectation_suite, out_file):
     out = ""
     all_pass = True
-    for expect in expects:
+    for expect in expectation_suite:
         curr_out, curr_result = expect.return_output()
         out += curr_out
         if not curr_result:
             all_pass = False
+        print(f"Generated output for {expect.expect_name}")
     if all_pass:
         message = "SUCCESS"
     else:
         message = "FAILURE"
     out = f"{GreatestExpectations.suite_name} data expectations suite results: {message}\n{out}"
-    print(f"SUCCESS: Compiled all expectation results")
+    print(f"Compiled all expectation results")
     try:
         with open(out_file, "w") as text_file:
             text_file.write(out)
@@ -79,12 +97,12 @@ def output_data(expects, out_file):
     # return out
 
 
-def validator(config, input_file_name, results_file=DEFAULT_OUTPUT_FILE):
-    expects = parse_config(config)
-    # Pass by reference - expects updated in read_csv
-    read_csv(input_file_name, DELIM, expects)
-    output_data(expects, results_file)
-    print(f"SUCCESS: Process completed")
+def validator(config_file_path, input_file_path, results_file_path=DEFAULT_OUTPUT_FILE):
+    expectation_suite = parse_config(config_file_path)
+    # Pass by reference - expectation_suite updated in read_csv
+    validate_csv(input_file_path, expectation_suite, DELIM)
+    output_data(expectation_suite, results_file_path)
+    print(f"Process complete")
 
 
 if __name__ == "__main__":

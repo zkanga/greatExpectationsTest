@@ -2,6 +2,7 @@ General
 
     The expectations in the sample are written as a yml but written twice in the file as json
     I will write for now as a json
+     - Confirmed by Robert via email
 
     Neither input file or expectation file is assured to exist
 
