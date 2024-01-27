@@ -1,16 +1,14 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import csv
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def read_csv(input_file, delimiter=','):
+    with open(input_file, 'r', newline='') as csv_file:
+        reader = csv.DictReader(csv_file, delimiter=delimiter)
+        data = list(reader)
+        data = {key: list(map(lambda d: d[key], data)) for key in data[0]}
+
+    return data
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__ == "__main__":
+    read_csv(rf'DataGen/input.csv', '|')

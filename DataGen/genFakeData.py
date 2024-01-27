@@ -5,7 +5,7 @@ from random import randint, choice
 fake = Faker()
 
 out_file_name = "input.csv"
-num_records = 10
+num_records = 100
 delim = '|'
 
 header = ['Runner Name', 'Classification', 'Time In Minutes']
