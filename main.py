@@ -4,6 +4,8 @@ from Classes.Expectations.GreatestExpectations import GreatestExpectations
 from Classes.Expectations.RangeExpectation import ExpectRange
 from Classes.Expectations.ValueExpectation import ExpectValues
 
+# TODO: add logging
+
 TYPE_2_EXPECT_MAP = {
     "EXPECT_VALUES": ExpectValues,
     "EXPECT_RANGE": ExpectRange
@@ -69,11 +71,11 @@ def output_data(expects, out_file):
     # return out
 
 
-def validator(config, input_file_name):
+def validator(config, input_file_name, results_file=output_file):
     expects = parse_config(config)
     # Pass by reference - expects updated in read_csv
     read_csv(input_file_name, DELIM, expects)
-    output_data(expects, output_file)
+    output_data(expects, results_file)
 
 
 if __name__ == "__main__":
