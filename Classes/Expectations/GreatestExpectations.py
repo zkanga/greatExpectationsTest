@@ -18,7 +18,7 @@ class GreatestExpectations:
             result = True
         else:
             out = (f"\t{self.expect_name}: FAIL - {len(self.errors)} {self.exp_code} error(s) in the {self.field_name} field.\n"
-                   f"\tAll values must be {self.vals_must_be}\n")
+                   f"\tAll values expected to be {self.vals_must_be}\n")
             for error in self.errors:
                 out += f"\t\tLine {error.row_num}: Invalid value - {error.value}\n"
             result = False

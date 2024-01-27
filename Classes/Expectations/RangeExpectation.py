@@ -10,7 +10,7 @@ class ExpectRange(GreatestExpectations):
         super().__init__(name, field)
         self.lower = details['RANGE_LWR']
         self.upper = details['RANGE_UPR']
-        self.error_details = f"between {self.lower} and {self.upper}"
+        self.vals_must_be = f"between {self.lower} and {self.upper}"
 
     def validate(self, line_number, row):
         if not self.lower <= int(row[self.field_location]) <= self.upper:
