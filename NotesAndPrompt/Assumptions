@@ -1,0 +1,26 @@
+General
+
+    The expectations in the sample are written as a yml but written twice in the file as json
+    I will write for now as a json
+
+    Neither input file or expectation file is assured to exist
+
+    The user can be trusted (i.e won't provide One instead of 1 as the RANGE_LWR)
+
+    If the expectations fails in first chunk of reading, I should continue to read to capture all errors
+        Rather than quickly failing and providing the initial failures
+
+    Should overwrite results.txt if it exists
+        Ideally a UUID or process detail of some sort would be appended to the title to never need to overwrite
+            i.e results_fileName_utcTimestamp.txt
+
+Expect Values:
+    Allow for '1' == 1 equal True
+
+Expect range:
+    Ranges will be numerical integer
+
+Edge cases:
+    An expectation file exists with no expectations but the csv file doesn't exist
+        Fail because you're still expecting a file
+

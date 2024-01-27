@@ -1,0 +1,22 @@
+{
+    "SUITE": {
+        "NAME": "MY_EXPECTATIONS",
+        "EXPECTATIONS": {
+            "FIRST_EXP_CODE": {
+                "type": "EXPECT_VALUES",
+                "params": {
+                    "FLD_NAME": "WARRANTY_DURATION",
+                    "VALUES": ["A", "B", "C"]
+                }
+            },
+            "SECOND_EXP_CODE": {
+                "type": "EXPECT_RANGE",
+                "params": {
+                    "FLD_NAME": "AMOUNT",
+                    "RANGE_LWR": 1,
+                    "RANGE_UPR": 10
+                }
+            }
+        }
+    }
+}
