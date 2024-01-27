@@ -1,0 +1,22 @@
+{
+    "SUITE": {
+        "NAME": "MY_EXPECTATIONS",
+        "EXPECTATIONS": {
+            "FIRST_EXP_CODE": {
+                "type": "EXPECT_VALUES",
+                "params": {
+                    "FLD_NAME": "Classification",
+                    "VALUES": ["professional", "amateur"]
+                }
+            },
+            "SECOND_EXP_CODE": {
+                "type": "EXPECT_RANGE",
+                "params": {
+                    "FLD_NAME": "Time In Minutes",
+                    "RANGE_LWR": 1,
+                    "RANGE_UPR": 40
+                }
+            }
+        }
+    }
+}
