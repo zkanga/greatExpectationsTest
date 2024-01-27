@@ -1,9 +1,10 @@
 class GreatestExpectations:
+    suite_name = None
 
-    def __init__(self, suite, name):
-        self.suite = suite
+    def __init__(self, name, field):
         self.expect_name = name
+        self.field_name = field
         self.errors = []
 
-    def validate(self, row, row_number, value):
+    def validate(self, line_number, row):
         pass
