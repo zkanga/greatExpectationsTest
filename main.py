@@ -4,7 +4,7 @@ from Classes.Expectations.GreatestExpectations import GreatestExpectations
 from Classes.Expectations.RangeExpectation import ExpectRange
 from Classes.Expectations.ValueExpectation import ExpectValues
 
-# TODO: add logging
+# Using prints as logs as of now but would add logging given time.
 
 TYPE_2_EXPECT_MAP = {
     "EXPECT_VALUES": ExpectValues,
@@ -14,7 +14,7 @@ TYPE_2_EXPECT_MAP = {
 DELIM = '|'
 DEFAULT_OUTPUT_FILE = "results.txt"
 
-# TODO: move all the json keywords into a config file
+# Would move all the json keywords into a config file given the time
 
 
 def parse_config(config_path):

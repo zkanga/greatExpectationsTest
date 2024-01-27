@@ -1,6 +1,5 @@
 import unittest
 from main import parse_config, validate_csv
-from json import decoder
 
 suite = parse_config("ideal_test.json")
 DELIM = '|'

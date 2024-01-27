@@ -1,5 +1,7 @@
 General
 
+    Assuming the range expectation is inclusive
+
     If a file has no data in it, fails because it has no header
 
     A file with a matching header but no records will passes because no records break expectations
