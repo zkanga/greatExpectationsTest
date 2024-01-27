@@ -14,7 +14,7 @@
                 "params": {
                     "FLD_NAME": "Time In Minutes",
                     "RANGE_LWR": 1,
-                    "RANGE_UPR": 30
+                    "RANGE_UPR": 40
                 }
             }
         }
