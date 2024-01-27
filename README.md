@@ -7,7 +7,7 @@ Dear Reviewers,
 Thank you for taking the time to evaluate this technical assessment.
 
 ## Purpose
-This repository contains the technical assessment for showcase my abilities in python.
+To showcase my abilities in python in my response to the technical assesment provided.
 
 
 ### Unit Tests
@@ -20,4 +20,4 @@ Please note that the unit tests included heavyweight unit test file in this asse
 3. Execute the unit tests and evaluate the candidate's solutions based on the provided criteria.
 	- If using heavyweight test, you will need to pip install faker
 
-Thank you once again for your valuable time and dedication to the hiring process.
+Thank you once again for your valuable time.
