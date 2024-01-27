@@ -6,15 +6,15 @@ from Classes.Expectations.ValueExpectation import ExpectValues
 
 # Using prints as logs as of now but would add logging given time.
 
+# Would move to config with time
 TYPE_2_EXPECT_MAP = {
     "EXPECT_VALUES": ExpectValues,
     "EXPECT_RANGE": ExpectRange
 }
 
+# Would make as an env variable
 DELIM = '|'
 DEFAULT_OUTPUT_FILE = "results.txt"
-
-# Would move all the json keywords into a config file given the time
 
 
 def parse_config(config_path):
@@ -30,12 +30,19 @@ def parse_config(config_path):
         raise
     print(f"SUCCESS: Read config file: {config_path}")
     expectations = []
-    # TODO: confirm there aren't multiple suites
-    GreatestExpectations.suite_name = config["SUITE"]["NAME"]
-    for expect_name, details in config["SUITE"]["EXPECTATIONS"].items():
-        expectations.append(TYPE_2_EXPECT_MAP[details["type"]]
-                            (expect_name, details['params']['FLD_NAME'], details['params']))
-        print(f"Generated {expect_name} expectation as a part of {GreatestExpectations.suite_name} suite")
+    if len(config) != 1:
+        print(f"ERROR: {len(config)} suites provided, expected 1")
+        exit(1)
+    try:
+        # Would move all the json keywords into a config file given the time
+        GreatestExpectations.suite_name = config["SUITE"]["NAME"]
+        for expect_name, details in config["SUITE"]["EXPECTATIONS"].items():
+            expectations.append(TYPE_2_EXPECT_MAP[details["type"]]
+                                (expect_name, details['params']['FLD_NAME'], details['params']))
+            print(f"Generated {expect_name} expectation as a part of {GreatestExpectations.suite_name} suite")
+    except KeyError:
+        print(f"ERROR: Keys don't match the agreed format")
+        raise
     print(f"Generated {len(expectations)} expectations as a part of {GreatestExpectations.suite_name} suite")
     return expectations
 
@@ -79,6 +86,7 @@ def validate_csv(input_file_path, expectation_suite, delimiter):
 def output_data(expectation_suite, out_file):
     out = ""
     all_pass = True
+    # Generating output from each expectation in the suite
     for expect in expectation_suite:
         curr_out, curr_result = expect.return_output()
         out += curr_out
@@ -91,6 +99,7 @@ def output_data(expectation_suite, out_file):
         message = "FAILURE"
     out = f"{GreatestExpectations.suite_name} data expectations suite results: {message}\n{out}"
     print(f"Compiled all expectation results")
+
     try:
         with open(out_file, "w") as text_file:
             text_file.write(out)
@@ -101,6 +110,8 @@ def output_data(expectation_suite, out_file):
     # return out
 
 
+# I took the liberty of allowing writing the output file to a custom location if it was provided
+# If none is provided it will output to results.txt as specified in the prompt
 def validator(config_file_path, input_file_path, results_file_path=DEFAULT_OUTPUT_FILE):
     expectation_suite = parse_config(config_file_path)
     # Pass by reference - expectation_suite updated in read_csv
