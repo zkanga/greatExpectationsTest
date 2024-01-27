@@ -12,7 +12,7 @@ TYPE_2_EXPECT_MAP = {
 }
 
 DELIM = '|'
-output_file = "results.txt"
+DEFAULT_OUTPUT_FILE = "results.txt"
 
 
 def parse_config(config_path):
@@ -22,12 +22,15 @@ def parse_config(config_path):
     except Exception as e:
         print(f"ERROR: reading config file {config_path}.\n{e}")
         raise
+    print(f"SUCCESS: Read config file: {config_path}")
     expectations = []
     # TODO: confirm there aren't multiple suites
     GreatestExpectations.suite_name = config["SUITE"]["NAME"]
     for expect_name, details in config["SUITE"]["EXPECTATIONS"].items():
         expectations.append(TYPE_2_EXPECT_MAP[details["type"]]
                             (expect_name, details['params']['FLD_NAME'], details['params']))
+        print(f"SUCCESS: Generated {expect_name} expectation as a part of {GreatestExpectations.suite_name} suite")
+    print(f"SUCCESS: Generated {len(expectations)} expectations as a part of {GreatestExpectations.suite_name} suite")
     return expectations
 
 
@@ -47,6 +50,7 @@ def read_csv(input_file, delimiter, expectations):
     except FileNotFoundError:
         print(f"File '{input_file}' not found.")
         raise
+    print(f"SUCCESS: Read all the records of {input_file}")
 
 
 def output_data(expects, out_file):
@@ -62,20 +66,23 @@ def output_data(expects, out_file):
     else:
         message = "FAILURE"
     out = f"{GreatestExpectations.suite_name} data expectations suite results: {message}\n{out}"
+    print(f"SUCCESS: Compiled all expectation results")
     try:
         with open(out_file, "w") as text_file:
             text_file.write(out)
     except Exception as e:
         print(f"Error writing to file {out_file}.\n{e}")
         raise
+    print(f"SUCCESS: Wrote all expectation results to {out_file}")
     # return out
 
 
-def validator(config, input_file_name, results_file=output_file):
+def validator(config, input_file_name, results_file=DEFAULT_OUTPUT_FILE):
     expects = parse_config(config)
     # Pass by reference - expects updated in read_csv
     read_csv(input_file_name, DELIM, expects)
     output_data(expects, results_file)
+    print(f"SUCCESS: Process completed")
 
 
 if __name__ == "__main__":

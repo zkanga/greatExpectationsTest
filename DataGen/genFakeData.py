@@ -14,11 +14,9 @@ def gen_csv(filename, num_records, delim, header, classifications, low_num, high
         writer = csv.writer(out_file, delimiter=delim)
         writer.writerow(header)
         for x in range(num_records):
-            # runner_data = gen_record()
-            # writer.writerow(runner_data)
             writer.writerow(gen_record(classifications, low_num, high_num))
 
-    print(f"Wrote {num_records} to '{filename}'")
+    print(f"Wrote {num_records} test records to '{filename}'")
 
 
 if __name__ == "__main__":
