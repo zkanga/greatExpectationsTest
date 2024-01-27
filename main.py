@@ -14,6 +14,8 @@ TYPE_2_EXPECT_MAP = {
 DELIM = '|'
 DEFAULT_OUTPUT_FILE = "results.txt"
 
+# TODO: move all the json keywords into a config file
+
 
 def parse_config(config_path):
     try:

@@ -2,6 +2,13 @@ import unittest
 from main import validator
 from DataGen.genFakeData import gen_csv
 
+"""
+Cases to add
+good, bad, and empty config existing and input file
+writing results to a location where it can't
+wrong delimiter in csv
+"""
+
 
 class TestDataValidator(unittest.TestCase):
 
