@@ -6,11 +6,9 @@ Program flow:
     Read and validate expectations yml (Assuming existence)
     Create an array of n number of child expectation objects
         Can be multi-threaded to improve performance
-    Read a CHUNK of input csv (Assuming existence)
-        Chunk-size a variable hardcoded in a config
-        'Necessary' in the case of large file sizes
+    Read a line of input csv
+        Minimizes memory impact and works w/csv reader required by prompt
     Each expectation object in the array runs on the chunk of csv data and stores results within itself
-        Can be mutli-threaded for performance
     Repeat Chunk read and expectation objects run on each chunk until EOF (End of file)
     Iterate through child expectation objects to create a results.txt
     Write results.txt (Assuming valid write permissions)

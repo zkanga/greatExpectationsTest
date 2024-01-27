@@ -1,35 +1,24 @@
 General
 
-    Assuming the range expectation is inclusive
-
     If a file has no data in it, fails because it has no header
 
     A file with a matching header but no records will passes because no records break expectations
-
-    Assuming a user won't create a valid config without any expectations within the suite
 
     The expectations in the sample are written as a yml but written twice in the file as json
     I will write for now as a json
      - Confirmed by Robert via email
 
-    Neither input file or expectation file is assured to exist
-
     The user can be trusted (i.e won't provide One instead of 1 as the RANGE_LWR)
+    - from prompt
 
-    If the expectations fails in first chunk of reading, I should continue to read to capture all errors
-        Rather than quickly failing and providing the initial failures
 
-    Should overwrite results.txt if it exists
+    Overwrite results.txt if it exists
         Ideally a UUID or process detail of some sort would be appended to the title to never need to overwrite
             i.e results_fileName_utcTimestamp.txt
 
 Expect Values:
-    Allow for '1' == 1 equal True
+    Python == True to assure line meets expectation
 
 Expect range:
     Ranges will be numerical integer
-
-Edge cases:
-    An expectation file exists with no expectations but the csv file doesn't exist
-        Fail because you're still expecting a file
-
+    The range expectation is inclusive
