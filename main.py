@@ -29,7 +29,9 @@ def read_csv(input_file, delimiter, expectations):
     with open(input_file, 'r', newline='') as csv_file:
         # Create a CSV reader object
         csv_reader = csv.reader(csv_file, delimiter=delimiter)
-
+        header = next(csv_reader)
+        for expectation in expectations:
+            expectation.field_location = header.index(expectation.field_name)
         # Iterate over each row in the CSV file
         for line_number, row in enumerate(csv_reader, 1):
             # print(line_number, row)
@@ -37,9 +39,9 @@ def read_csv(input_file, delimiter, expectations):
                 expectation.validate(line_number, row)
 
 
-
 def validator(config, input_file_name):
     expects = parse_config(config)
+    # Pass by reference - expects updated in read_csv
     read_csv(input_file_name, DELIM, expects)
 
 

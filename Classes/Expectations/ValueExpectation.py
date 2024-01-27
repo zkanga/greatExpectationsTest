@@ -1,4 +1,5 @@
 from Classes.Expectations.GreatestExpectations import GreatestExpectations
+from Classes.DataError import DataError
 
 
 class ExpectValues(GreatestExpectations):
@@ -9,4 +10,5 @@ class ExpectValues(GreatestExpectations):
         self.values = details['VALUES']
 
     def validate(self, line_number, row):
-        pass
+        if not row[self.field_location] in self.values:
+            self.errors.append(DataError(row[self.field_location], line_number))

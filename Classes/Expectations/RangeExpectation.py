@@ -1,4 +1,5 @@
 from Classes.Expectations.GreatestExpectations import GreatestExpectations
+from Classes.DataError import DataError
 
 
 class ExpectRange(GreatestExpectations):
@@ -11,4 +12,5 @@ class ExpectRange(GreatestExpectations):
         self.upper = details['RANGE_UPR']
 
     def validate(self, line_number, row):
-        pass
+        if not self.lower <= int(row[self.field_location]) <= self.upper:
+            self.errors.append(DataError(row[self.field_location], line_number))
