@@ -17,8 +17,7 @@ def parse_config(config_path):
         config = json.load(f)
     expectations = []
     # TODO: confirm there aren't multiple suites
-    suite = config["SUITE"]["NAME"]
-    GreatestExpectations.suite_name = suite
+    GreatestExpectations.suite_name = config["SUITE"]["NAME"]
     for expect_name, details in config["SUITE"]["EXPECTATIONS"].items():
         expectations.append(TYPE_2_EXPECT_MAP[details["type"]]
                             (expect_name, details['params']['FLD_NAME'], details['params']))
@@ -39,10 +38,28 @@ def read_csv(input_file, delimiter, expectations):
                 expectation.validate(line_number, row)
 
 
+def prepare_output(expects):
+    out = ""
+    all_pass = True
+    for expect in expects:
+        curr_out, curr_result = expect.return_output()
+        out += curr_out
+        if not curr_result:
+            all_pass = False
+    if all_pass:
+        message = "SUCCESS"
+    else:
+        message = "FAILURE"
+    out = f"{GreatestExpectations.suite_name} data expectations suite results: {message}\n{out}"
+    return out
+
+
 def validator(config, input_file_name):
     expects = parse_config(config)
     # Pass by reference - expects updated in read_csv
     read_csv(input_file_name, DELIM, expects)
+    output = prepare_output(expects)
+    print(output)
 
 
 if __name__ == "__main__":

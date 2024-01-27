@@ -8,6 +8,7 @@ class ExpectValues(GreatestExpectations):
     def __init__(self, name, field, details):
         super().__init__(name, field)
         self.values = details['VALUES']
+        self.error_details = f"in {self.values}"
 
     def validate(self, line_number, row):
         if not row[self.field_location] in self.values:
