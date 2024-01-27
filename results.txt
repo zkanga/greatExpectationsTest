@@ -1,0 +1,5 @@
+MY_EXPECTATIONS data expectations suite results: SUCCESS
+	FIRST_EXP_CODE: PASS - All values in Classification are in ['professional', 'amateur']
+
+	SECOND_EXP_CODE: PASS - All values in Time In Minutes are between 1 and 40
+

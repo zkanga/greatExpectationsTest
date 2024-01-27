@@ -21,7 +21,7 @@ def gen_csv(filename, num_records, delim, header, classifications, low_num, high
 
 if __name__ == "__main__":
     out_file_name = "input.csv"
-    records = 100
+    records = 5
     delimiter = '|'
 
     file_header = ['Runner Name', 'Classification', 'Time In Minutes']

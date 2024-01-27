@@ -55,9 +55,13 @@ def validate_csv(input_file_path, expectation_suite, delimiter):
             # I would refactor to generate expectations here given more time
 
             # Processing updating each expectation with its column number
-            header = next(csv_reader)
-            for expectation in expectation_suite:
-                expectation.field_location = header.index(expectation.field_name)
+            try:
+                header = next(csv_reader)
+                for expectation in expectation_suite:
+                    expectation.field_location = header.index(expectation.field_name)
+            except StopIteration:
+                print(f"ERROR: {input_file_path} is missing a header")
+                raise
 
             # Reading each line and then letting each expectation read it
             # Should eliminate memory impact since only a single line of the file is checked at a time
